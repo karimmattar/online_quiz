@@ -1,0 +1,58 @@
+{% extends 'quiz/base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block css %}
+
+{% endblock css %}
+
+{% block content %}
+    <div class="container mt-5 text-right">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form|crispy }}
+            </div>
+            <div class="form-group mt-5">
+                <label for="qq">الإختيارات</label>
+                <span id="dublicated_value" class="form-text text-danger" hidden>***قيمة مكررة***</span>
+                <input type="text" id="qq" class="form-control"/>
+                <input type="hidden" name="choices_dists" , id="choices_dists">
+                <small id="num_choices" class="form-text text-muted mt-3">يجب أن يضاف عدد 2 من الإختيارات علي الأقل</small>
+                <small id="num_correct" class="form-text text-muted mt-3">يجب أن يتواجد إختيار صحيح علي الأقل</small>
+            </div>
+            <div class="form-group">
+                <table class="table table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">حذف</th>
+                        <th scope="col">الإجابة</th>
+                        <th scope="col">صحيحة</th>
+                    </tr>
+                    </thead>
+                    <tbody id="dists">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="row text-center my-5 py-5">
+                <div class="col-12 text-center">
+                    <a id="bb" class="btn btn-info" href="javascript:void(0)" onclick="return false" target="_self">اضافة
+                        إختيار</a>
+                </div>
+            </div>
+            <hr>
+            <div class="row text-center my-5 py-5">
+                <div class="col-12 text-center">
+                    <input id="goo" class="btn btn-success" type="submit" value="اضافة"/>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    <script src="{% static '/custom/add_question.js' %}"></script>
+{% endblock script %}

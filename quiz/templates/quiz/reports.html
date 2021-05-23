@@ -1,0 +1,29 @@
+{% extends 'quiz/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <table class="table text-right my-5" style="direction: rtl">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">مفتاح الانضمام</th>
+            <th scope="col">تاريخ الاقلاع</th>
+            <th scope="col">اجمالي الدرجة</th>
+            <th scope="col">اجمالي الوقت</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for quiz in quizzes %}
+            <tr>
+                <td>{{ quiz.enrollment_key }}</td>
+                <td>{{ quiz.launch_time }}</td>
+                <td>{{ quiz.total_mark }}</td>
+                <td>{{ quiz.total_time }}</td>
+                <td><a class="text-info" href="{% url 'reports_view_submit' quiz.enrollment_key %}"><i
+                        class="far fa-eye"></i></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

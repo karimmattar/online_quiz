@@ -1,0 +1,33 @@
+{% extends 'quiz/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="container-fluid my-5">
+        <form method="POST" action="{% url 'quiz_answer' %}">
+            {% csrf_token %}
+            <input type="hidden" name="attendee_id" value="{{ attendee_id }}"/>
+            <ol dir="rtl" class="text-right">
+                {% for que in quiz.questions.all %}
+                    <li dir="rtl" class="py-5">
+                        <div class="container-fluid text-right">
+                            <h5>{{ que.question_body }}</h5>
+                            <div class="row text-right">
+                                {% for dis in que.distractions.all %}
+                                    <div class="col-4 text-right mt-3">
+                                        <label for="{{ dis.id }}">{{ dis.distraction }}</label>
+                                        <input type="radio" id="{{ dis.id }}" name="{{ que.id }}"
+                                               value="{{ dis.id }}" class=""/>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ol>
+            <div class="form-group text-center my-5">
+                <input type="submit" class="btn btn-success my-5" value="تأكيد"/>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

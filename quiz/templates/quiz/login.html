@@ -1,0 +1,54 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static '/logo.png' %}">
+
+    <title>{% if title %}
+        {{ title }}
+    {% else %}
+        --
+    {% endif %}</title>
+
+    <link href="{% static '/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+</head>
+
+<body class="text-center">
+<div class="container">
+    <div class="d-flex align-items-center justify-content-center min-vh-100">
+        <form method="POST">
+            {% csrf_token %}
+            <img class="mb-4" src="{% static '/logo.png' %}" alt="" width="40%">
+            {% if messages %}
+                {% for message in messages %}
+                    <span class="d-block{% if message.tags == 'error' %}
+                        alert-danger
+                    {% else %}
+                        alert-{{ message.tags }}
+                    {% endif %}">{{ message }}</span>
+                {% endfor %}
+            {% endif %}
+            <div class="form-group">
+                <h1 class="h3 mb-3 font-weight-normal">تسجيل الدخول</h1>
+                <label for="inputEmail" class="sr-only">البريد الإلكتروني</label>
+                <input type="email" id="inputEmail" class="form-control" placeholder="البريد الإلكتروني" required autofocus
+                       name="email">
+                <br>
+                <label for="inputPassword" class="sr-only">الرقم السري</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="الرقم السري" required
+                       name="password">
+            </div>
+            <div class="container mt-5">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">تسجيل دخول</button>
+            </div>
+            <hr>
+            <p class="mt-5 mb-3 text-muted">&copy; 2020-2021</p>
+        </form>
+    </div>
+</div>
+</body>
+</html>

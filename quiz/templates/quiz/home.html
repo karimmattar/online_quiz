@@ -1,0 +1,14 @@
+{% extends 'quiz/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center align-items-center">
+            <span>{{ user.email }} مرحبا</span>
+        </div>
+        <div class="col-12 d-flex justify-content-center align-items-center">
+            <img src="{% static '/pngegg.png' %}" width="50%"/>
+        </div>
+    </div>
+{% endblock content %}

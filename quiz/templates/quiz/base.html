@@ -1,0 +1,222 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static '/logo.png' %}">
+
+    <title>{% if title %}
+        {{ title }}
+    {% else %}
+        --
+    {% endif %}</title>
+
+    <link href="{% static '/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static '/custom/custom.css' %}" rel="stylesheet">
+    <link href="{% static '/fontawesome/css/all.css' %}" rel="stylesheet">
+    {% block css %}
+    {% endblock css %}
+</head>
+
+<body>
+
+<div style="width: 100%">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static '/logo.png' %}" alt="logo" width="30%"/></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                {% if user.is_staff %}
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item {% if request.resolver_match.url_name in "reports,reports_view_submit,report_attendee_by_id" %}active{% endif %}">
+                            <a class="nav-link" href="{% url 'reports' %}">التقارير
+                                {% if request.resolver_match.url_name in "reports,reports_view_submit" %}
+                                    <span class="sr-only">(current)</span>{% endif %}</a>
+                        </li>
+                        <li class="nav-item {% if request.resolver_match.url_name in "quizzes,quiz,quiz_id" %}active{% endif %}">
+                            <a class="nav-link" href="{% url 'quizzes' %}">الإختبارات</a>
+                        </li>
+                        <li class="nav-item {% if request.resolver_match.url_name in "questions,question,question_add" %}active{% endif %}">
+                            <a class="nav-link" href="{% url 'questions' %}">الأسئلة
+                                {% if request.resolver_match.url_name == "home" %}
+                                    <span class="sr-only">(current)</span>{% endif %}</a>
+                        </li>
+                        <li class="nav-item {% if request.resolver_match.url_name == "home" %}active{% endif %}">
+                            <a class="nav-link" href="{% url 'home' %}">الرئيسية
+                                {% if request.resolver_match.url_name == "home" %}
+                                    <span class="sr-only">(current)</span>{% endif %}</a>
+                        </li>
+                    </ul>
+                {% else %}
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item {% if request.resolver_match.url_name == "report_student_all" %}active{% endif %}">
+                            <a class="nav-link" href="{% url 'report_student_all' %}">اختبار سابق
+                                {% if request.resolver_match.url_name == "report_student_all" %}
+                                    <span class="sr-only">(current)</span>{% endif %}</a>
+                        </li>
+                        <li class="nav-item {% if request.resolver_match.url_name == "quiz_take" %}active{% endif %}">
+                            <a class="nav-link" href="{% url 'quiz_take' %}">اختبار جديد
+                                {% if request.resolver_match.url_name == "quiz_take" %}
+                                    <span class="sr-only">(current)</span>{% endif %}</a>
+                        </li>
+                        <li class="nav-item {% if request.resolver_match.url_name == "home" %}active{% endif %}">
+                            <a class="nav-link" href="{% url 'home' %}">الرئيسية
+                                {% if request.resolver_match.url_name == "home" %}
+                                    <span class="sr-only">(current)</span>{% endif %}</a>
+                        </li>
+                    </ul>
+                {% endif %}
+                <span class="navbar-text">
+                    {{ user.email }}
+                </span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-fluid">
+        <ul class="nav justify-content-end">
+            {% if request.resolver_match.url_name == "home" %}
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">الرئيسية</a>
+                </li>
+            {% elif request.resolver_match.url_name == "questions" %}
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">الأسئلة</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">/الرئيسية</a>
+                </li>
+            {% elif request.resolver_match.url_name == "question" %}
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">حذف\تعديل</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'questions' %}">/الأسئلة</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">/الرئيسية</a>
+                </li>
+            {% elif request.resolver_match.url_name == "question_add" %}
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">إضافة سؤال</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'questions' %}">/الأسئلة</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">/الرئيسية</a>
+                </li>
+            {% elif request.resolver_match.url_name == "quizzes" %}
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">الإختبارات</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">/الرئيسية</a>
+                </li>
+            {% elif request.resolver_match.url_name == "quiz" %}
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="{% url 'quizzes' %}">اضافة</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'quizzes' %}">/الإختبارات</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">/الرئيسية</a>
+                </li>
+            {% elif request.resolver_match.url_name == "quiz_id" %}
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">تفاصيل الإختبار</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'quizzes' %}">/الإختبارات</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">/الرئيسية</a>
+                </li>
+            {% elif request.resolver_match.url_name == "quiz_take" %}
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">دخول الإختبار</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">/الرئيسية</a>
+                </li>
+            {% elif request.resolver_match.url_name == "reports" %}
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">التقارير</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">/الرئيسية</a>
+                </li>
+            {% elif request.resolver_match.url_name == "reports_view_submit" %}
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">تفاصيل الاختبار</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'reports' %}">/التقارير</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">/الرئيسية</a>
+                </li>
+            {% elif request.resolver_match.url_name == "report_attendee_by_id" %}
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">الدرجات</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'reports' %}">/التقارير</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">/الرئيسية</a>
+                </li>
+            {% elif request.resolver_match.url_name == "report_student_all" %}
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">الدرجات</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">/الرئيسية</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="container-fluid text-right">
+        {% if messages %}
+            {% for message in messages %}
+                <span class="d-block{% if message.tags == 'error' %}
+                        alert-danger
+                    {% else %}
+                        alert-{{ message.tags }}
+                    {% endif %}">{{ message }}</span>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="container-fluid">
+        {% block content %}
+
+        {% endblock content %}
+    </div>
+
+    <footer class="fixed-bottom">
+        <div class="container text-right my-5">
+            {% block footer %}
+            {% endblock footer %}
+        </div>
+        <div class="text-center">
+            <p>2020-2021</p>
+        </div>
+    </footer>
+</div>
+
+
+<script src="{% static '/jquery/jquery.js' %}"></script>
+<script src="{% static '/bootstrap/js/bootstrap.js' %}"></script>
+
+{% block script %}
+{% endblock script %}
+</body>
+</html>

@@ -1,0 +1,25 @@
+{% extends 'quiz/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <table class="table text-right my-5" style="direction: rtl">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">مفتاح الانضمام</th>
+            <th scope="col">اجمالي درجات الاسئلة</th>
+            <th scope="col">اجمالي درجات الاجابات</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for att in attendees %}
+            <tr>
+                <td>{{ att.key }}</td>
+                <td>{{ att.total_mark}}</td>
+                <td>{{ att.mark }}</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock content %}

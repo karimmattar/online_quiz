@@ -1,0 +1,70 @@
+{% extends 'quiz/base.html' %}
+
+{% load static %}
+
+{% block css %}
+    <style>
+        blockquote {
+            border: none;
+            font-family: Georgia, "Times New Roman", Times, serif;
+            margin-bottom: -30px;
+            quotes: "\201C" "\201D" "\2018" "\2019";
+        }
+
+        blockquote h3 {
+            font-size: 20px;
+        }
+
+        blockquote h3:before {
+            content: open-quote;
+            font-weight: normal;
+            font-size: 60px;
+            color: #ffc107;
+        }
+
+        blockquote h3:after {
+            content: close-quote;
+            font-weight: normal;
+            font-size: 60px;
+            color: #ffc107;
+
+        }
+
+        #nn {
+            list-style-type: circle;
+        }
+    </style>
+{% endblock css %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="container text-center text-secondary">
+            <blockquote>
+                <h3>
+                    تعليمات هامة قبل الدخول الي الإختبار
+                </h3>
+                <p>
+                    انسخ و الصق مفتلح الانضمام الذي ارسله لك المعلم؟ في <span class="text-danger">خانة التسجيل</span>
+                    اسفله.
+                    <br>
+                    بمجرد الضغط علي <span class="text-danger">زر الدخول</span> سيتم تحويلك الي الاختبار و بالتالي يتم
+                    تأكيد حضورك, لذلك يرجي العلم ان <span class="text-info">الاخنبار صالح للدخول مرة واحدة فقط</span>.
+                    <br>
+                    بمجرد الانتهاء من الاختبار يرجي <span class="text-danger">الضغط علي زر التأكيد</span> ليتم ارسال الاجابات الخاصة بك.
+                </p>
+            </blockquote>
+        </div>
+        <div class="container-fluid d-flex justify-content-center align-items-center align-content-center mt-5">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group text-center mt-5">
+                    <input id="enrollment-key" type="text" class="form-control text-right text-warning"
+                           name="enrollment" required placeholder="مفتاح الإنضمام"/>
+                </div>
+                <div class="form-group text-center mt-5">
+                    <input type="submit" class="btn btn-success" value="دخول"/>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

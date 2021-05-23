@@ -1,0 +1,22 @@
+{% extends 'quiz/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <table class="table text-right my-5" style="direction: rtl">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">اسم الطالب</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for attendee in attendees %}
+            <tr>
+                <td>{{ attendee.author.email }}</td>
+                <td><a class="text-info" href="{% url 'report_attendee_by_id' attendee.id %}"><i class="far fa-eye"></i></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

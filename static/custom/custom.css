@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'Vibes';
+    src: url("../fonts/Vibes/Vibes-Regular.ttf"),
+    local("../fonts/Vibes/Vibes-Regular.ttf");
+}
+
+@font-face {
+    font-family: 'Kufam';
+    src: url("../fonts/Kufam/Kufam-VariableFont_wght.ttf"),
+    local("../fonts/Kufam/Kufam-VariableFont_wght.ttf");
+}
+
+body {
+    font-family: 'Kufam';
+    /*font-size: 18pt;*/
+}

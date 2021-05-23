@@ -1,0 +1,42 @@
+{% extends 'quiz/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <table class="table text-right my-5" style="direction: rtl">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">السؤال</th>
+            <th scope="col">الاجابة</th>
+            <th scope="col">درجة السؤال</th>
+            <th scope="col">درجة الاجابة</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ans in attendee.answers.all %}
+            <tr>
+                <td>{{ ans.question.question_body }}</td>
+                <td>{{ ans.answer.distraction }}</td>
+                <td>{{ ans.question.question_mark }}</td>
+                <td>{{ ans.mark }}</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td>{{ total_mark }}</td>
+            <td>{{ mark }}</td>
+        </tr>
+        </tbody>
+    </table>
+    {% if attendee.check_if_corrected == False %}
+        <div class="container text-center my-5">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="submit" value="تصحيح" class="text-light btn btn-warning">
+                </div>
+            </form>
+        </div>
+    {% endif %}
+{% endblock content %}

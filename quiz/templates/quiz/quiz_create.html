@@ -1,0 +1,57 @@
+{% extends 'quiz/base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container mt-5 text-right">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <div class="form-group my-5">
+                    <label for="enrollment-key">مفتاح الإنضمام</label>
+                    <input type="text" id="enrollment-key" name="enrollment-key" class="form-control text-right"
+                           readonly required/>
+                    <a id="auto-generate-key" class="btn btn-info my-2" href="javascript:void(0)">توليد عشوائي</a>
+                </div>
+                <div class="form-group my-5">
+                    <label for="launch-time-date">تاريخ الإقلاع</label>
+                    <input type="date" id="launch-time-date" name="launch-time-date" class="form-control text-right"
+                           required/>
+                    <label for="launch-time-time">وقت الإقلاع</label>
+                    <input type="time" id="launch-time-time" name="launch-time-time" class="form-control text-right"
+                           required min="09:00" max="18:00"/>
+                </div>
+                <div class="form-group my-5">
+                    <label for="questions">الأسئلة</label>
+                    <div class="form-group" id="questions">
+                        {% for que in qus %}
+                            <div class="form-group my-4">
+                                <label for="{{ que.id }}" class="mx-3">{{ que.question_body }}</label>
+                                <input type="checkbox" name="questions" value="{{ que.id }}" id="{{ que.id }}"/>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <div class="form-group text-center my-5">
+                <input type="submit" class="btn btn-success my-5" value="إضافة"/>
+            </div>
+        </form>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    <script>
+        $("#auto-generate-key").click(function () {
+            let randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < 16; i++) {
+                result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+            }
+            $("#enrollment-key").val(result);
+        })
+    </script>
+{% endblock script %}
